@@ -1,0 +1,90 @@
+@charset "UTF-8";
+:root{
+    --hw-red:#97171c;
+    --hw-red-dark:#511618;
+    --ink:#000000;
+    --muted:#5a616d;
+    --line:#E5E7EB;
+    --bg:#ffffff;
+    --card:#958484;
+}
+*{box-sizing:border-box}
+body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+
+/* Navigācija */
+.navbar{background:#fff;border-bottom:3px solid var(--hw-red);}
+.hw-brand{
+    font-family:'Bungee',cursive;
+    font-size:1.1rem;letter-spacing:.3px;
+    color:var(--ink)!important;
+    display:flex;align-items:center;gap:.55rem;
+}
+.hw-dot{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--hw-red);
+    box-shadow:0 0 0 3px rgba(225,27,34,.18);
+}
+.navbar .nav-link{font-weight:600;color:var(--ink);}
+.navbar .nav-link:hover{color:var(--hw-red);}
+.hw-user{font-weight:700;color:var(--ink);}
+.hw-admin-badge{
+    background:var(--ink);color:#fff;border-radius:999px;
+    font-size:.65rem;font-weight:700;padding:.12rem .5rem;margin-left:.35rem;
+    text-transform:uppercase;letter-spacing:.5px;
+}
+
+/* ---- Pogas ---- */
+.btn-hw{background:var(--hw-red);border:none;color:#fff;font-weight:600;}
+.btn-hw:hover{background:var(--hw-red-dark);color:#fff;}
+.btn-outline-hw{border:2px solid var(--hw-red);color:var(--hw-red);font-weight:600;background:#fff;}
+.btn-outline-hw:hover{background:var(--hw-red);color:#fff;}
+
+/* ---- Virsraksts ---- */
+.hw-heading{font-family:'Bungee',cursive;font-size:clamp(1.3rem,3.2vw,2rem);margin:0;}
+.hw-sub{color:var(--muted);}
+
+/* ---- Rīkjosla (meklēšana/kārtošana) ---- */
+.hw-toolbar{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1rem;}
+
+/* ---- Mašīnas kartīte (die-cast blister) ---- */
+.hw-card{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    overflow:hidden;height:100%;
+    transition:transform .15s ease, box-shadow .15s ease;
+}
+.hw-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(16,24,40,.10);}
+.hw-card__panel{
+    position:relative;aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px dashed var(--line);overflow:hidden;
+}
+.hw-card__panel img{width:100%;height:100%;object-fit:cover;}
+.hw-card__panel svg{width:74%;height:auto;}
+.hw-card__body{padding:1rem 1.1rem 1.2rem;}
+.hw-card__title{font-weight:800;font-size:1.05rem;margin:0 0 .15rem;color:var(--ink);text-decoration:none;display:inline-block;}
+.hw-card__title:hover{color:var(--hw-red);}
+.hw-card__year{color:var(--muted);font-size:.9rem;margin-bottom:.55rem;}
+.hw-pill{
+    display:inline-block;border-radius:999px;padding:.18rem .6rem;
+    font-size:.72rem;font-weight:700;letter-spacing:.3px;
+    background:rgba(225,27,34,.10);color:var(--hw-red);
+    border:1px solid rgba(225,27,34,.25);
+}
+.hw-card__actions{display:flex;gap:.4rem;margin-top:.8rem;flex-wrap:wrap;}
+
+/* "Pievienot" kartīte ---- */
+.hw-add{
+    border:2px dashed var(--hw-red);border-radius:18px;min-height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:var(--hw-red);text-decoration:none;background:#fff;padding:2rem 1rem;
+    transition:background .15s ease;
+}
+.hw-add:hover{background:rgba(225,27,34,.05);color:var(--hw-red);}
+.hw-add .plus{font-size:2.4rem;line-height:1;font-weight:700;}
+
+
+footer.hw-footer{color:var(--muted);font-size:.85rem;padding:2rem 0;}
