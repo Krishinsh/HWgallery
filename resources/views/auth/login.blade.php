@@ -3,31 +3,31 @@
 @section('title', __('Pieslēgties'))
 
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6 col-lg-5">
+    <div class="hw-auth">
+        <div class="hw-auth__box">
             <div class="hw-card">
-                <div class="hw-card__body p-4">
-                    <h1 class="hw-heading mb-3">{{ __('Pieslēgties') }}</h1>
+                <div class="hw-card__body hw-card__body--pad">
+                    <h1 class="hw-heading" style="margin-bottom:1.1rem;">{{ __('Pieslēgties') }}</h1>
 
                     <form action="{{ route('login') }}" method="POST">
                         @csrf
-                        <div class="mb-3">
-                            <label for="login" class="form-label fw-semibold">{{ __('Lietotājvārds vai e-pasts') }}</label>
-                            <input type="text" class="form-control" id="login" name="login"
+                        <div class="hw-field">
+                            <label for="login" class="hw-label">{{ __('Lietotājvārds vai e-pasts') }}</label>
+                            <input type="text" class="hw-input" id="login" name="login"
                                    value="{{ old('login') }}" required autofocus>
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold">{{ __('Parole') }}</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="hw-field">
+                            <label for="password" class="hw-label">{{ __('Parole') }}</label>
+                            <input type="password" class="hw-input" id="password" name="password" required>
                         </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="remember" name="remember">
-                            <label class="form-check-label" for="remember">{{ __('Atcerēties mani') }}</label>
+                        <div class="hw-check">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">{{ __('Atcerēties mani') }}</label>
                         </div>
-                        <button type="submit" class="btn btn-hw w-100">{{ __('Pieslēgties') }}</button>
+                        <button type="submit" class="btn-hw btn-hw--full">{{ __('Pieslēgties') }}</button>
                     </form>
 
-                    <p class="hw-sub small text-center mt-3 mb-0">
+                    <p class="hw-sub hw-sub--sm hw-sub--center" style="margin-top:1rem;">
                         {{ __('Nav konta?') }} <a href="{{ route('register') }}">{{ __('Reģistrējies šeit') }}</a>
                     </p>
                 </div>

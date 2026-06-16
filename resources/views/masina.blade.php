@@ -10,19 +10,20 @@
             'balta'=>'#CBD0D6','sudraba'=>'#C4C8CC','pelēka'=>'#9BA1A6','peleka'=>'#9BA1A6',
             'violeta'=>'#8E4EC6','rozā'=>'#E36BA6','roza'=>'#E36BA6',
         ];
-        $autoKrasa = $krasaMap[mb_strtolower(trim($masina->color ?? ''))] ?? '#E5484D';
+        $autoKrasa   = $krasaMap[mb_strtolower(trim($masina->color ?? ''))] ?? '#E5484D';
         $irIpasnieks = auth()->check() && auth()->id() === $masina->user_id;
         $irAdmins    = auth()->check() && auth()->user()->isAdmin();
         $bildes      = $masina->images;
         $galvena     = $masina->primaryImage();
     @endphp
 
-    <a href="{{ url()->previous() }}" class="btn btn-outline-hw btn-sm mb-3">{{ __('← Atpakaļ') }}</a>
+    <a href="{{ url()->previous() }}" class="btn-out btn-out--sm" style="margin-bottom:1rem;display:inline-flex;">{{ __('← Atpakaļ') }}</a>
 
-    <div class="row g-4">
-        <div class="col-12 col-lg-6">
-            <div class="hw-card">
-                <div class="hw-card__panel" style="background:{{ $autoKrasa }}1A; aspect-ratio:1/1;">
+    <div class="hw-grid--2">
+        {{-- Bilde --}}
+        <div>
+            <div class="hw-card hw-card--flat">
+                <div class="hw-card__panel hw-card__panel--sq" style="background:{{ $autoKrasa }}1A;">
                     @if($galvena)
                         <img id="hw-main-image" src="{{ $galvena->url }}" alt="{{ $masina->model }}">
                     @else
@@ -37,21 +38,17 @@
             </div>
 
             @if($bildes->count() > 0)
-                <div class="d-flex flex-wrap gap-2 mt-3">
+                <div class="hw-gallery-thumbs">
                     @foreach($bildes as $bilde)
-                        <div class="position-relative">
+                        <div class="hw-thumb-wrap">
                             <img src="{{ $bilde->url }}" alt="bilde"
-                                 onclick="document.getElementById('hw-main-image').src = this.src;"
-                                 style="width:74px;height:74px;object-fit:cover;border-radius:10px;cursor:pointer;
-                                        border:2px solid {{ $bilde->is_primary ? 'var(--hw-red)' : 'var(--line)' }};">
+                                 class="hw-gallery-thumb {{ $bilde->is_primary ? 'hw-gallery-thumb--primary' : '' }}"
+                                 onclick="document.getElementById('hw-main-image').src = this.src;">
                             @if($irIpasnieks)
                                 <form method="POST" action="{{ route('masina.bilde.dzest', [$masina->id, $bilde->id]) }}"
-                                      onsubmit="return confirm('{{ __('Dzēst šo bildi?') }}');"
-                                      style="position:absolute;top:-8px;right:-8px;">
+                                      onsubmit="return confirm('{{ __('Dzēst šo bildi?') }}');">
                                     @csrf @method('DELETE')
-                                    <button type="submit" title="Dzēst bildi"
-                                            style="border:none;border-radius:50%;width:22px;height:22px;line-height:1;
-                                                   background:var(--hw-red);color:#fff;font-weight:700;cursor:pointer;">×</button>
+                                    <button type="submit" class="hw-thumb-del" title="Dzēst bildi">×</button>
                                 </form>
                             @endif
                         </div>
@@ -60,54 +57,53 @@
             @endif
         </div>
 
-        <div class="col-12 col-lg-6">
-            <div class="hw-card h-100">
-                <div class="hw-card__body">
-                    <h1 class="hw-heading mb-2">{{ $masina->model }}</h1>
-                    <span class="hw-pill mb-3">{{ $masina->series }}</span>
+        {{-- Info --}}
+        <div class="hw-card">
+            <div class="hw-card__body">
+                <h1 class="hw-heading" style="margin-bottom:.4rem;">{{ $masina->model }}</h1>
+                <span class="hw-pill" style="margin-bottom:1rem;display:inline-block;">{{ $masina->series }}</span>
 
-                    <table class="table table-sm mt-3">
-                        <tbody>
-                            <tr><th class="text-muted" style="width:40%">{{ __('Gads') }}</th><td>{{ $masina->year }}</td></tr>
-                            <tr><th class="text-muted">{{ __('Sērija') }}</th><td>{{ $masina->series }}</td></tr>
-                            <tr><th class="text-muted">{{ __('Krāsa') }}</th><td>{{ $masina->color ?? __('Nav norādīta') }}</td></tr>
-                            <tr>
-                                <th class="text-muted">{{ __('Pievienoja') }}</th>
-                                <td>
-                                    @if($masina->user)
-                                        <a href="{{ route('lietotajs.galerija', $masina->user->id) }}">{{ $masina->user->nickname }}</a>
-                                    @else
-                                        {{ __('nezināms') }}
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr><th class="text-muted">{{ __('Pievienots') }}</th><td>{{ $masina->created_at->format('Y-m-d H:i') }}</td></tr>
-                        </tbody>
-                    </table>
+                <table class="hw-table">
+                    <tbody>
+                        <tr><th>{{ __('Gads') }}</th><td>{{ $masina->year }}</td></tr>
+                        <tr><th>{{ __('Sērija') }}</th><td>{{ $masina->series }}</td></tr>
+                        <tr><th>{{ __('Krāsa') }}</th><td>{{ $masina->color ?? __('Nav norādīta') }}</td></tr>
+                        <tr>
+                            <th>{{ __('Pievienoja') }}</th>
+                            <td>
+                                @if($masina->user)
+                                    <a href="{{ route('lietotajs.galerija', $masina->user->id) }}">{{ $masina->user->nickname }}</a>
+                                @else
+                                    {{ __('nezināms') }}
+                                @endif
+                            </td>
+                        </tr>
+                        <tr><th>{{ __('Pievienots') }}</th><td>{{ $masina->created_at->format('Y-m-d H:i') }}</td></tr>
+                    </tbody>
+                </table>
 
-                    @if($masina->description)
-                        <p class="mt-2">{{ $masina->description }}</p>
-                    @endif
+                @if($masina->description)
+                    <p style="margin-top:.9rem;">{{ $masina->description }}</p>
+                @endif
 
-                    @if($irIpasnieks || $irAdmins)
-                        <div class="hw-card__actions mt-3">
-                            @if($irIpasnieks)
-                                <a href=”{{ route('masina.rediget', $masina->id) }}” class=”btn btn-outline-hw”>{{ __('Rediģēt') }}</a>
-                                <form method=”POST” action=”{{ route('masina.dzest', $masina->id) }}”
-                                      onsubmit=”return confirm('{{ __('Dzēst mašīnu') }} \”{{ $masina->model }}\”?');”>
-                                    @csrf @method('DELETE')
-                                    <button type=”submit” class=”btn btn-hw”>{{ __('Dzēst') }}</button>
-                                </form>
-                            @elseif($irAdmins)
-                                <form method=”POST” action=”{{ route('admin.dzest', $masina->id) }}”
-                                      onsubmit=”return confirm('{{ __('Administrators: dzēst šo saturu?') }}');”>
-                                    @csrf @method('DELETE')
-                                    <button type=”submit” class=”btn btn-hw”>{{ __('Dzēst (admin)') }}</button>
-                                </form>
-                            @endif
-                        </div>
-                    @endif
-                </div>
+                @if($irIpasnieks || $irAdmins)
+                    <div class="hw-card__actions">
+                        @if($irIpasnieks)
+                            <a href="{{ route('masina.rediget', $masina->id) }}" class="btn-out">{{ __('Rediģēt') }}</a>
+                            <form method="POST" action="{{ route('masina.dzest', $masina->id) }}"
+                                  onsubmit="return confirm('{{ __('Dzēst mašīnu') }} \"{{ $masina->model }}\"?');">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn-hw">{{ __('Dzēst') }}</button>
+                            </form>
+                        @elseif($irAdmins)
+                            <form method="POST" action="{{ route('admin.dzest', $masina->id) }}"
+                                  onsubmit="return confirm('{{ __('Administrators: dzēst šo saturu?') }}');">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn-hw">{{ __('Dzēst (admin)') }}</button>
+                            </form>
+                        @endif
+                    </div>
+                @endif
             </div>
         </div>
     </div>

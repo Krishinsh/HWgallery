@@ -13,87 +13,96 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand hw-brand" href="{{ route('galerija') }}">
-                <span class="hw-dot"></span> HotWheels Gallery
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hwnav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav class="hw-nav">
+        <div class="hw-wrap">
+            <div class="hw-nav__inner">
+                <a class="hw-brand" href="{{ route('galerija') }}">
+                    <span class="hw-dot"></span> HotWheels Gallery
+                </a>
 
-            <div class="collapse navbar-collapse" id="hwnav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('galerija') }}">{{ __('Galerija') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('lietotaji') }}">{{ __('Lietotāji') }}</a></li>
-                    @auth
-                        <li class="nav-item"><a class="nav-link" href="{{ route('mana.kolekcija') }}">{{ __('Mana kolekcija') }}</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('profils.show') }}">{{ __('Profils') }}</a></li>
-                    @endauth
-                </ul>
+                <button class="hw-nav__toggle" id="hw-toggle" aria-label="Izvēlne" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
 
-                <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item d-flex align-items-center me-lg-3">
-                        <a class="nav-link px-1 py-0 {{ app()->getLocale() === 'lv' ? 'fw-bold' : '' }}"
-                           href="{{ route('lang.switch', 'lv') }}">LV</a>
-                        <span class="text-muted mx-1">|</span>
-                        <a class="nav-link px-1 py-0 {{ app()->getLocale() === 'en' ? 'fw-bold' : '' }}"
-                           href="{{ route('lang.switch', 'en') }}">EN</a>
-                    </li>
-                    @auth
-                        <li class="nav-item me-lg-3">
-                            <a href="{{ route('profils.show') }}" class="hw-user text-decoration-none">{{ auth()->user()->nickname }}</a>
+                <div class="hw-nav__menu" id="hw-menu">
+                    <div class="hw-nav__left">
+                        <a class="hw-nav__link" href="{{ route('galerija') }}">{{ __('Galerija') }}</a>
+                        <a class="hw-nav__link" href="{{ route('lietotaji') }}">{{ __('Lietotāji') }}</a>
+                        @auth
+                            <a class="hw-nav__link" href="{{ route('mana.kolekcija') }}">{{ __('Mana kolekcija') }}</a>
+                            <a class="hw-nav__link" href="{{ route('profils.show') }}">{{ __('Profils') }}</a>
+                        @endauth
+                    </div>
+
+                    <div class="hw-nav__right">
+                        <div class="hw-lang">
+                            <a href="{{ route('lang.switch', 'lv') }}"
+                               class="{{ app()->getLocale() === 'lv' ? 'hw-lang--active' : '' }}">LV</a>
+                            <span class="hw-lang__sep">|</span>
+                            <a href="{{ route('lang.switch', 'en') }}"
+                               class="{{ app()->getLocale() === 'en' ? 'hw-lang--active' : '' }}">EN</a>
+                        </div>
+
+                        @auth
+                            <a href="{{ route('profils.show') }}" class="hw-user">{{ auth()->user()->nickname }}</a>
                             @if(auth()->user()->isAdmin())
                                 <span class="hw-admin-badge">Admin</span>
                             @endif
-                        </li>
-                        <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="btn btn-outline-hw btn-sm">{{ __('Izrakstīties') }}</button>
+                                <button type="submit" class="btn-out btn-out--sm">{{ __('Izrakstīties') }}</button>
                             </form>
-                        </li>
-                    @else
-                        <li class="nav-item me-lg-2 my-1 my-lg-0">
-                            <a class="btn btn-outline-hw btn-sm" href="{{ route('login') }}">{{ __('Pieslēgties') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-hw btn-sm" href="{{ route('register') }}">{{ __('Reģistrēties') }}</a>
-                        </li>
-                    @endauth
-                </ul>
+                        @else
+                            <a class="btn-out btn-out--sm" href="{{ route('login') }}">{{ __('Pieslēgties') }}</a>
+                            <a class="btn-hw btn-hw--sm" href="{{ route('register') }}">{{ __('Reģistrēties') }}</a>
+                        @endauth
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main class="container py-4">
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-        @if(session('warning'))
-            <div class="alert alert-warning">{{ session('warning') }}</div>
-        @endif
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach($errors->all() as $kluda)
-                        <li>{{ $kluda }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    <main class="hw-main">
+        <div class="hw-wrap">
+            @if(session('success'))
+                <div class="hw-alert hw-alert--ok">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+                <div class="hw-alert hw-alert--err">{{ session('error') }}</div>
+            @endif
+            @if(session('warning'))
+                <div class="hw-alert hw-alert--warn">{{ session('warning') }}</div>
+            @endif
+            @if($errors->any())
+                <div class="hw-alert hw-alert--err">
+                    <ul>
+                        @foreach($errors->all() as $kluda)
+                            <li>{{ $kluda }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-        @yield('content')
+            @yield('content')
+        </div>
     </main>
 
     <footer class="hw-footer">
-        <div class="container">{{ __('HWCollect — Hot Wheels kolekcijas galerija · Laravel 11 + MySQL') }}</div>
+        <div class="hw-wrap">{{ __('HWCollect — Hot Wheels kolekcijas galerija · Laravel 11 + MySQL') }}</div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function () {
+            var btn  = document.getElementById('hw-toggle');
+            var menu = document.getElementById('hw-menu');
+            btn.addEventListener('click', function () {
+                var open = menu.classList.toggle('open');
+                btn.classList.toggle('open', open);
+                btn.setAttribute('aria-expanded', open);
+            });
+        })();
+    </script>
+
     @yield('scripts')
 </body>
 </html>

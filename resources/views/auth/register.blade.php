@@ -3,41 +3,41 @@
 @section('title', __('Reģistrēties'))
 
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6 col-lg-5">
+    <div class="hw-auth">
+        <div class="hw-auth__box">
             <div class="hw-card">
-                <div class="hw-card__body p-4">
-                    <h1 class="hw-heading mb-3">{{ __('Reģistrēties') }}</h1>
+                <div class="hw-card__body hw-card__body--pad">
+                    <h1 class="hw-heading" style="margin-bottom:1.1rem;">{{ __('Reģistrēties') }}</h1>
 
                     <form action="{{ route('register') }}" method="POST">
                         @csrf
-                        <div class="mb-3">
-                            <label for="nickname" class="form-label fw-semibold">{{ __('Lietotājvārds') }}</label>
-                            <input type="text" class="form-control @error('nickname') is-invalid @enderror"
+                        <div class="hw-field">
+                            <label for="nickname" class="hw-label">{{ __('Lietotājvārds') }}</label>
+                            <input type="text" class="hw-input {{ $errors->has('nickname') ? 'hw-input--err' : '' }}"
                                    id="nickname" name="nickname" value="{{ old('nickname') }}" required autofocus>
-                            @error('nickname')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('nickname')<div class="hw-error">{{ $message }}</div>@enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold">{{ __('E-pasts') }}</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                        <div class="hw-field">
+                            <label for="email" class="hw-label">{{ __('E-pasts') }}</label>
+                            <input type="email" class="hw-input {{ $errors->has('email') ? 'hw-input--err' : '' }}"
                                    id="email" name="email" value="{{ old('email') }}" required>
-                            @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('email')<div class="hw-error">{{ $message }}</div>@enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold">{{ __('Parole') }}</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                        <div class="hw-field">
+                            <label for="password" class="hw-label">{{ __('Parole') }}</label>
+                            <input type="password" class="hw-input {{ $errors->has('password') ? 'hw-input--err' : '' }}"
                                    id="password" name="password" required>
-                            @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            @error('password')<div class="hw-error">{{ $message }}</div>@enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="password_confirmation" class="form-label fw-semibold">{{ __('Parole atkārtoti') }}</label>
-                            <input type="password" class="form-control"
+                        <div class="hw-field">
+                            <label for="password_confirmation" class="hw-label">{{ __('Parole atkārtoti') }}</label>
+                            <input type="password" class="hw-input"
                                    id="password_confirmation" name="password_confirmation" required>
                         </div>
-                        <button type="submit" class="btn btn-hw w-100">{{ __('Izveidot kontu') }}</button>
+                        <button type="submit" class="btn-hw btn-hw--full">{{ __('Izveidot kontu') }}</button>
                     </form>
 
-                    <p class="hw-sub small text-center mt-3 mb-0">
+                    <p class="hw-sub hw-sub--sm hw-sub--center" style="margin-top:1rem;">
                         {{ __('Jau ir konts?') }} <a href="{{ route('login') }}">{{ __('Pieslēdzies šeit') }}</a>
                     </p>
                 </div>

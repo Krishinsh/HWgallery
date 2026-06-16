@@ -1,27 +1,19 @@
 @php
-    // Krāsas nosaukuma kartējums uz toni kartītes mašīnai
     $krasaMap = [
-        'sarkana'  => '#E5484D',
-        'zila'     => '#3E63DD',
-        'zaļa'     => '#46A758',
-        'zala'     => '#46A758',
-        'dzeltena' => '#E8C400',
-        'oranža'   => '#FF8B3D',
-        'oranza'   => '#FF8B3D',
-        'melna'    => '#3A3A3A',
-        'balta'    => '#CBD0D6',
-        'sudraba'  => '#C4C8CC',
-        'pelēka'   => '#9BA1A6',
-        'peleka'   => '#9BA1A6',
-        'violeta'  => '#8E4EC6',
-        'rozā'     => '#E36BA6',
+        'sarkana'  => '#E5484D', 'zila'     => '#3E63DD',
+        'zaļa'     => '#46A758', 'zala'     => '#46A758',
+        'dzeltena' => '#E8C400', 'oranža'   => '#FF8B3D',
+        'oranza'   => '#FF8B3D', 'melna'    => '#3A3A3A',
+        'balta'    => '#CBD0D6', 'sudraba'  => '#C4C8CC',
+        'pelēka'   => '#9BA1A6', 'peleka'   => '#9BA1A6',
+        'violeta'  => '#8E4EC6', 'rozā'     => '#E36BA6',
         'roza'     => '#E36BA6',
     ];
     $atslega   = mb_strtolower(trim($masina->color ?? ''));
     $autoKrasa = $krasaMap[$atslega] ?? '#E5484D';
 
     $showOwnerActions = $showOwnerActions ?? false;
-    $showAdminDelete  = $showAdminDelete ?? false;
+    $showAdminDelete  = $showAdminDelete  ?? false;
 @endphp
 
 <div class="hw-card">
@@ -40,6 +32,7 @@
             </svg>
         @endif
     </a>
+
     <div class="hw-card__body">
         <a href="{{ route('masina.detail', $masina->id) }}" class="hw-card__title">{{ $masina->model }}</a>
         <div class="hw-card__year">{{ $masina->year }}</div>
@@ -48,19 +41,17 @@
         @if($showOwnerActions || $showAdminDelete)
             <div class="hw-card__actions">
                 @if($showOwnerActions)
-                    <a href=”{{ route('masina.rediget', $masina->id) }}” class=”btn btn-outline-hw btn-sm”>{{ __('Rediģēt') }}</a>
-                    <form method=”POST” action=”{{ route('masina.dzest', $masina->id) }}”
-                          onsubmit=”return confirm('{{ __('Dzēst mašīnu') }} \”{{ $masina->model }}\”?');”>
-                        @csrf
-                        @method('DELETE')
-                        <button type=”submit” class=”btn btn-hw btn-sm”>{{ __('Dzēst') }}</button>
+                    <a href="{{ route('masina.rediget', $masina->id) }}" class="btn-out btn-out--sm">{{ __('Rediģēt') }}</a>
+                    <form method="POST" action="{{ route('masina.dzest', $masina->id) }}"
+                          onsubmit="return confirm('{{ __('Dzēst mašīnu') }} \"{{ $masina->model }}\"?');">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="btn-hw btn-hw--sm">{{ __('Dzēst') }}</button>
                     </form>
                 @elseif($showAdminDelete)
-                    <form method=”POST” action=”{{ route('admin.dzest', $masina->id) }}”
-                          onsubmit=”return confirm('{{ __('Administrators: dzēst saturu') }} \”{{ $masina->model }}\”?');”>
-                        @csrf
-                        @method('DELETE')
-                        <button type=”submit” class=”btn btn-hw btn-sm”>{{ __('Dzēst (admin)') }}</button>
+                    <form method="POST" action="{{ route('admin.dzest', $masina->id) }}"
+                          onsubmit="return confirm('{{ __('Administrators: dzēst saturu') }} \"{{ $masina->model }}\"?');">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="btn-hw btn-hw--sm">{{ __('Dzēst (admin)') }}</button>
                     </form>
                 @endif
             </div>
