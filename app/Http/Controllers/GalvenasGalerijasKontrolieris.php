@@ -23,12 +23,12 @@ class GalvenasGalerijasKontrolieris extends Controller
 
     public function list(Request $request)
     {
-        return $this->renderetGaleriju($request, 'Galvenā galerija');
+        return $this->renderetGaleriju($request, __('Galvenā galerija'));
     }
 
     public function search(Request $request)
     {
-        return $this->renderetGaleriju($request, 'Meklēšanas rezultāti');
+        return $this->renderetGaleriju($request, __('Meklēšanas rezultāti'));
     }
 
     private function renderetGaleriju(Request $request, string $virsraksts)

@@ -93,5 +93,6 @@
     "mašīnas publiskajā kolekcijā": "cars in public collection",
     "← Visi lietotāji": "← All users",
     "Šim lietotājam vēl nav pievienota neviena mašīna.": "This user has no cars yet.",
-    "HWCollect — Hot Wheels kolekcijas galerija · Laravel 11 + MySQL": "HWCollect — Hot Wheels collection gallery · Laravel 11 + MySQL"
+    "HWCollect — Hot Wheels kolekcijas galerija · Laravel 11 + MySQL": "HWCollect — Hot Wheels collection gallery · Laravel 11 + MySQL",
+    "Meklēšanas rezultāti": "Search results"
 }
