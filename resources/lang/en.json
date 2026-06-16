@@ -94,5 +94,19 @@
     "← Visi lietotāji": "← All users",
     "Šim lietotājam vēl nav pievienota neviena mašīna.": "This user has no cars yet.",
     "HWCollect — Hot Wheels kolekcijas galerija · Laravel 11 + MySQL": "HWCollect — Hot Wheels collection gallery · Laravel 11 + MySQL",
-    "Meklēšanas rezultāti": "Search results"
+    "Meklēšanas rezultāti": "Search results",
+    "nosaukums": "name",
+    "gads": "year",
+    "sērija": "series",
+    "krāsa": "color",
+    "apraksts": "description",
+    "bilde": "image",
+    "Nosaukums ir obligāts.": "Name is required.",
+    "Gads ir obligāts.": "Year is required.",
+    "Gadam jābūt skaitlim.": "Year must be a number.",
+    "Gadam jābūt vismaz 1950.": "Year must be at least 1950.",
+    "Gads nevar būt lielāks par :max.": "Year cannot be greater than :max.",
+    "Failam jābūt attēlam.": "The file must be an image.",
+    "Atļautie formāti: png, jpg, jpeg, gif, webp.": "Allowed formats: png, jpg, jpeg, gif, webp.",
+    "Bilde nedrīkst pārsniegt 5 MB.": "Image must not exceed 5 MB."
 }

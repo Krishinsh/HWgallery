@@ -26,12 +26,26 @@ class IndividualasGalerijasKontrolieris extends Controller
     private function atributi(): array
     {
         return [
-            'model'       => 'nosaukums',
-            'year'        => 'gads',
-            'series'      => 'sērija',
-            'color'       => 'krāsa',
-            'description' => 'apraksts',
-            'images.*'    => 'bilde',
+            'model'       => __('nosaukums'),
+            'year'        => __('gads'),
+            'series'      => __('sērija'),
+            'color'       => __('krāsa'),
+            'description' => __('apraksts'),
+            'images.*'    => __('bilde'),
+        ];
+    }
+
+    private function zinojumi(): array
+    {
+        return [
+            'model.required'  => __('Nosaukums ir obligāts.'),
+            'year.required'   => __('Gads ir obligāts.'),
+            'year.integer'    => __('Gadam jābūt skaitlim.'),
+            'year.min'        => __('Gadam jābūt vismaz 1950.'),
+            'year.max'        => __('Gads nevar būt lielāks par :max.'),
+            'images.*.image'  => __('Failam jābūt attēlam.'),
+            'images.*.mimes'  => __('Atļautie formāti: png, jpg, jpeg, gif, webp.'),
+            'images.*.max'    => __('Bilde nedrīkst pārsniegt 5 MB.'),
         ];
     }
 
@@ -68,7 +82,7 @@ class IndividualasGalerijasKontrolieris extends Controller
 
     public function create(Request $request)
     {
-        $dati = $request->validate($this->noteikumi(), [], $this->atributi());
+        $dati = $request->validate($this->noteikumi(), $this->zinojumi(), $this->atributi());
 
         $masina = Auth::user()->cars()->create([
             'model'       => $dati['model'],
@@ -97,7 +111,7 @@ class IndividualasGalerijasKontrolieris extends Controller
         $masina = Car::with('images')->findOrFail($id);
         $this->parbauditIpasnieku($masina);
 
-        $dati = $request->validate($this->noteikumi(), [], $this->atributi());
+        $dati = $request->validate($this->noteikumi(), $this->zinojumi(), $this->atributi());
 
         $masina->model       = $dati['model'];
         $masina->year        = $dati['year'];
